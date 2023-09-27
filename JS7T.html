@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train Animation</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #E0E0E0;
+            overflow: hidden; /* Prevent scroll when train moves */
+        }
+
+        #train {
+            display: flex;
+            align-items: flex-end;
+            position: relative; /* To animate its position */
+        }
+
+        #smoke {
+            width: 50px;
+            height: 50px;
+            background-color: grey;
+            border-radius: 50%;
+            position: relative;
+            top: -60px;
+            left: 20px;
+            opacity: 0;
+        }
+
+        #wagon {
+            width: 200px;
+            height: 100px;
+            background-image: url(data:image/png;base64,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); 
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            position: relative;
+        }
+
+        button {
+            margin-top: 20px;
+        }
+
+        .btn-group {
+            position: absolute;
+            top: 80%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="train">
+    <div id="smoke"></div>
+    <div id="wagon"></div>
+</div>
+
+<div class="btn-group">
+    <button onclick="startAnimation()">Start</button>
+    <button onclick="stopAnimation()">Stop</button>
+</div>
+
+<script>
+    let smoke = document.getElementById('smoke');
+    let train = document.getElementById('train');
+    let animationId;
+    let position = 0;
+
+    function animateSmoke() {
+        position += 2;
+        train.style.left = position + 'px';
+        animationId = requestAnimationFrame(animateSmoke);
+    }
+
+    function startAnimation() {
+        animationId = requestAnimationFrame(animateSmoke);
+    }
+
+    function stopAnimation() {
+        cancelAnimationFrame(animationId);
+        train.style.left = '0px';
+        position = 0;
+    }
+</script>
+
+</body>
+</html>
+
